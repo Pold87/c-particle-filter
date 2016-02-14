@@ -1,0 +1,88 @@
+\hypertarget{particle__filter_8h}{\section{src/particle\-\_\-filter.h File Reference}
+\label{particle__filter_8h}\index{src/particle\-\_\-filter.\-h@{src/particle\-\_\-filter.\-h}}
+}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structparticle}{particle}
+\item 
+struct \hyperlink{structmeasurement}{measurement}
+\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{particle__filter_8h_a0240ac851181b84ac374872dc5434ee4}{N}~100 /$\ast$ Total number of particles $\ast$/
+\item 
+\#define \hyperlink{particle__filter_8h_a52037c938e3c1b126c6277da5ca689d0}{M}~200 /$\ast$ Number of fake measurements $\ast$/
+\item 
+\#define \hyperlink{particle__filter_8h_a97ba243a2070b9cb047b7cb86b41d3c1}{max\-\_\-x}~200
+\item 
+\#define \hyperlink{particle__filter_8h_add5fe35c54f38065d37667796a4c9fe2}{max\-\_\-y}~200
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{particle__filter_8h_a3442360283dd5444696842414812e53d}{normpdf} (double x, double mu, double sigma)
+\begin{DoxyCompactList}\small\item\em Calculates the value of x of a normal distribution with mean mu and standard deviation sigma. \end{DoxyCompactList}\item 
+void \hyperlink{particle__filter_8h_a94ec74091454fcde34b2c7359eaae12c}{init\-\_\-particles} (struct \hyperlink{structparticle}{particle} particles\mbox{[}\hyperlink{particle__filter_8h_a0240ac851181b84ac374872dc5434ee4}{N}\mbox{]})
+\item 
+void \hyperlink{particle__filter_8h_a98bfee41f6c2a1a6d87bab846b707a0e}{particle\-\_\-filter} (struct \hyperlink{structparticle}{particle} particles\mbox{[}\hyperlink{particle__filter_8h_a0240ac851181b84ac374872dc5434ee4}{N}\mbox{]}, struct \hyperlink{structmeasurement}{measurement} $\ast$m)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{particle__filter_8h_a52037c938e3c1b126c6277da5ca689d0}{\index{particle\-\_\-filter.\-h@{particle\-\_\-filter.\-h}!M@{M}}
+\index{M@{M}!particle_filter.h@{particle\-\_\-filter.\-h}}
+\subsubsection[{M}]{\setlength{\rightskip}{0pt plus 5cm}\#define M~200 /$\ast$ Number of fake measurements $\ast$/}}\label{particle__filter_8h_a52037c938e3c1b126c6277da5ca689d0}
+\hypertarget{particle__filter_8h_a97ba243a2070b9cb047b7cb86b41d3c1}{\index{particle\-\_\-filter.\-h@{particle\-\_\-filter.\-h}!max\-\_\-x@{max\-\_\-x}}
+\index{max\-\_\-x@{max\-\_\-x}!particle_filter.h@{particle\-\_\-filter.\-h}}
+\subsubsection[{max\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}\#define max\-\_\-x~200}}\label{particle__filter_8h_a97ba243a2070b9cb047b7cb86b41d3c1}
+\hypertarget{particle__filter_8h_add5fe35c54f38065d37667796a4c9fe2}{\index{particle\-\_\-filter.\-h@{particle\-\_\-filter.\-h}!max\-\_\-y@{max\-\_\-y}}
+\index{max\-\_\-y@{max\-\_\-y}!particle_filter.h@{particle\-\_\-filter.\-h}}
+\subsubsection[{max\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}\#define max\-\_\-y~200}}\label{particle__filter_8h_add5fe35c54f38065d37667796a4c9fe2}
+\hypertarget{particle__filter_8h_a0240ac851181b84ac374872dc5434ee4}{\index{particle\-\_\-filter.\-h@{particle\-\_\-filter.\-h}!N@{N}}
+\index{N@{N}!particle_filter.h@{particle\-\_\-filter.\-h}}
+\subsubsection[{N}]{\setlength{\rightskip}{0pt plus 5cm}\#define N~100 /$\ast$ Total number of particles $\ast$/}}\label{particle__filter_8h_a0240ac851181b84ac374872dc5434ee4}
+
+
+\subsection{Function Documentation}
+\hypertarget{particle__filter_8h_a94ec74091454fcde34b2c7359eaae12c}{\index{particle\-\_\-filter.\-h@{particle\-\_\-filter.\-h}!init\-\_\-particles@{init\-\_\-particles}}
+\index{init\-\_\-particles@{init\-\_\-particles}!particle_filter.h@{particle\-\_\-filter.\-h}}
+\subsubsection[{init\-\_\-particles}]{\setlength{\rightskip}{0pt plus 5cm}void init\-\_\-particles (
+\begin{DoxyParamCaption}
+\item[{struct {\bf particle}}]{particles\mbox{[}\-N\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8h_a94ec74091454fcde34b2c7359eaae12c}
+\hypertarget{particle__filter_8h_a3442360283dd5444696842414812e53d}{\index{particle\-\_\-filter.\-h@{particle\-\_\-filter.\-h}!normpdf@{normpdf}}
+\index{normpdf@{normpdf}!particle_filter.h@{particle\-\_\-filter.\-h}}
+\subsubsection[{normpdf}]{\setlength{\rightskip}{0pt plus 5cm}double normpdf (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{mu, }
+\item[{double}]{sigma}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8h_a3442360283dd5444696842414812e53d}
+
+
+Calculates the value of x of a normal distribution with mean mu and standard deviation sigma. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & \\
+\hline
+{\em mu} & Mean of the normal distribution \\
+\hline
+{\em sigma} & Standard deviation of the normal distribution\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of the normal distribution at position x 
+\end{DoxyReturn}
+\hypertarget{particle__filter_8h_a98bfee41f6c2a1a6d87bab846b707a0e}{\index{particle\-\_\-filter.\-h@{particle\-\_\-filter.\-h}!particle\-\_\-filter@{particle\-\_\-filter}}
+\index{particle\-\_\-filter@{particle\-\_\-filter}!particle_filter.h@{particle\-\_\-filter.\-h}}
+\subsubsection[{particle\-\_\-filter}]{\setlength{\rightskip}{0pt plus 5cm}void particle\-\_\-filter (
+\begin{DoxyParamCaption}
+\item[{struct {\bf particle}}]{particles\mbox{[}\-N\mbox{]}, }
+\item[{struct {\bf measurement} $\ast$}]{m}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8h_a98bfee41f6c2a1a6d87bab846b707a0e}

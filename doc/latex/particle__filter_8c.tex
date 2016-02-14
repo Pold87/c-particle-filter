@@ -1,0 +1,145 @@
+\hypertarget{particle__filter_8c}{\section{src/particle\-\_\-filter.c File Reference}
+\label{particle__filter_8c}\index{src/particle\-\_\-filter.\-c@{src/particle\-\_\-filter.\-c}}
+}
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$particle\-\_\-filter.\-h$>$}\\*
+{\ttfamily \#include $<$random\-\_\-number\-\_\-gen.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$time.\-h$>$}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{particle__filter_8c_a598a3330b3c21701223ee0ca14316eca}{P\-I}~3.\-14159265358979323846
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{particle__filter_8c_a94ec74091454fcde34b2c7359eaae12c}{init\-\_\-particles} (struct \hyperlink{structparticle}{particle} particles\mbox{[}\hyperlink{particle__filter_8h_a0240ac851181b84ac374872dc5434ee4}{N}\mbox{]})
+\item 
+double \hyperlink{particle__filter_8c_a3442360283dd5444696842414812e53d}{normpdf} (double x, double mu, double sigma)
+\begin{DoxyCompactList}\small\item\em Calculates the value of x of a normal distribution with mean mu and standard deviation sigma. \end{DoxyCompactList}\item 
+void \hyperlink{particle__filter_8c_aacb9ab230a139af6b7628d8215d92088}{weighted\-\_\-sample} (struct \hyperlink{structparticle}{particle} ps\mbox{[}$\,$\mbox{]}, struct \hyperlink{structparticle}{particle} res\mbox{[}$\,$\mbox{]}, double weights\mbox{[}$\,$\mbox{]}, int samples)
+\item 
+double \hyperlink{particle__filter_8c_a6a331c768a6e0dcd2317a17c0b625b0a}{max} (double arr\mbox{[}$\,$\mbox{]}, int size)
+\item 
+void \hyperlink{particle__filter_8c_ab1436782033805edd4133c1279d2a712}{resampling\-\_\-wheel} (struct \hyperlink{structparticle}{particle} ps\mbox{[}$\,$\mbox{]}, struct \hyperlink{structparticle}{particle} res\mbox{[}$\,$\mbox{]}, double weights\mbox{[}$\,$\mbox{]}, int samples)
+\item 
+void \hyperlink{particle__filter_8c_afce7ef749b6c9bb42d12660244d78256}{particle\-\_\-filter} (struct \hyperlink{structparticle}{particle} xs\mbox{[}\hyperlink{particle__filter_8h_a0240ac851181b84ac374872dc5434ee4}{N}\mbox{]}, struct \hyperlink{structmeasurement}{measurement} $\ast$z)
+\item 
+void \hyperlink{particle__filter_8c_a71fddb47349056e12f5170207499be8d}{create\-\_\-fake\-\_\-measurements} (struct \hyperlink{structmeasurement}{measurement} zs\mbox{[}\hyperlink{particle__filter_8h_a52037c938e3c1b126c6277da5ca689d0}{M}\mbox{]})
+\item 
+void \hyperlink{particle__filter_8c_a6b8086632f9adb0515910a2ade370e86}{zs\-\_\-to\-\_\-csv} (struct \hyperlink{structmeasurement}{measurement} zs\mbox{[}\hyperlink{particle__filter_8h_a52037c938e3c1b126c6277da5ca689d0}{M}\mbox{]}, char filename\mbox{[}$\,$\mbox{]})
+\item 
+struct \hyperlink{structparticle}{particle} \hyperlink{particle__filter_8c_a6c7da73bb73ff33689de7739dde4a46c}{weighted\-\_\-average} (struct \hyperlink{structparticle}{particle} ps\mbox{[}$\,$\mbox{]}, int size)
+\item 
+int \hyperlink{particle__filter_8c_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{particle__filter_8c_a598a3330b3c21701223ee0ca14316eca}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!P\-I@{P\-I}}
+\index{P\-I@{P\-I}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{P\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-I~3.\-14159265358979323846}}\label{particle__filter_8c_a598a3330b3c21701223ee0ca14316eca}
+
+
+\subsection{Function Documentation}
+\hypertarget{particle__filter_8c_a71fddb47349056e12f5170207499be8d}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!create\-\_\-fake\-\_\-measurements@{create\-\_\-fake\-\_\-measurements}}
+\index{create\-\_\-fake\-\_\-measurements@{create\-\_\-fake\-\_\-measurements}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{create\-\_\-fake\-\_\-measurements}]{\setlength{\rightskip}{0pt plus 5cm}void create\-\_\-fake\-\_\-measurements (
+\begin{DoxyParamCaption}
+\item[{struct {\bf measurement}}]{zs\mbox{[}\-M\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_a71fddb47349056e12f5170207499be8d}
+\hypertarget{particle__filter_8c_a94ec74091454fcde34b2c7359eaae12c}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!init\-\_\-particles@{init\-\_\-particles}}
+\index{init\-\_\-particles@{init\-\_\-particles}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{init\-\_\-particles}]{\setlength{\rightskip}{0pt plus 5cm}void init\-\_\-particles (
+\begin{DoxyParamCaption}
+\item[{struct {\bf particle}}]{particles\mbox{[}\-N\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_a94ec74091454fcde34b2c7359eaae12c}
+\hypertarget{particle__filter_8c_a0ddf1224851353fc92bfbff6f499fa97}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!main@{main}}
+\index{main@{main}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_a0ddf1224851353fc92bfbff6f499fa97}
+\hypertarget{particle__filter_8c_a6a331c768a6e0dcd2317a17c0b625b0a}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!max@{max}}
+\index{max@{max}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{max}]{\setlength{\rightskip}{0pt plus 5cm}double max (
+\begin{DoxyParamCaption}
+\item[{double}]{arr\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_a6a331c768a6e0dcd2317a17c0b625b0a}
+\hypertarget{particle__filter_8c_a3442360283dd5444696842414812e53d}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!normpdf@{normpdf}}
+\index{normpdf@{normpdf}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{normpdf}]{\setlength{\rightskip}{0pt plus 5cm}double normpdf (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{mu, }
+\item[{double}]{sigma}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_a3442360283dd5444696842414812e53d}
+
+
+Calculates the value of x of a normal distribution with mean mu and standard deviation sigma. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & \\
+\hline
+{\em mu} & Mean of the normal distribution \\
+\hline
+{\em sigma} & Standard deviation of the normal distribution\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Value of the normal distribution at position x 
+\end{DoxyReturn}
+\hypertarget{particle__filter_8c_afce7ef749b6c9bb42d12660244d78256}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!particle\-\_\-filter@{particle\-\_\-filter}}
+\index{particle\-\_\-filter@{particle\-\_\-filter}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{particle\-\_\-filter}]{\setlength{\rightskip}{0pt plus 5cm}void particle\-\_\-filter (
+\begin{DoxyParamCaption}
+\item[{struct {\bf particle}}]{xs\mbox{[}\-N\mbox{]}, }
+\item[{struct {\bf measurement} $\ast$}]{z}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_afce7ef749b6c9bb42d12660244d78256}
+\hypertarget{particle__filter_8c_ab1436782033805edd4133c1279d2a712}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!resampling\-\_\-wheel@{resampling\-\_\-wheel}}
+\index{resampling\-\_\-wheel@{resampling\-\_\-wheel}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{resampling\-\_\-wheel}]{\setlength{\rightskip}{0pt plus 5cm}void resampling\-\_\-wheel (
+\begin{DoxyParamCaption}
+\item[{struct {\bf particle}}]{ps\mbox{[}$\,$\mbox{]}, }
+\item[{struct {\bf particle}}]{res\mbox{[}$\,$\mbox{]}, }
+\item[{double}]{weights\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{samples}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_ab1436782033805edd4133c1279d2a712}
+\hypertarget{particle__filter_8c_a6c7da73bb73ff33689de7739dde4a46c}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!weighted\-\_\-average@{weighted\-\_\-average}}
+\index{weighted\-\_\-average@{weighted\-\_\-average}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{weighted\-\_\-average}]{\setlength{\rightskip}{0pt plus 5cm}struct {\bf particle} weighted\-\_\-average (
+\begin{DoxyParamCaption}
+\item[{struct {\bf particle}}]{ps\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{size}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_a6c7da73bb73ff33689de7739dde4a46c}
+\hypertarget{particle__filter_8c_aacb9ab230a139af6b7628d8215d92088}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!weighted\-\_\-sample@{weighted\-\_\-sample}}
+\index{weighted\-\_\-sample@{weighted\-\_\-sample}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{weighted\-\_\-sample}]{\setlength{\rightskip}{0pt plus 5cm}void weighted\-\_\-sample (
+\begin{DoxyParamCaption}
+\item[{struct {\bf particle}}]{ps\mbox{[}$\,$\mbox{]}, }
+\item[{struct {\bf particle}}]{res\mbox{[}$\,$\mbox{]}, }
+\item[{double}]{weights\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{samples}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_aacb9ab230a139af6b7628d8215d92088}
+\hypertarget{particle__filter_8c_a6b8086632f9adb0515910a2ade370e86}{\index{particle\-\_\-filter.\-c@{particle\-\_\-filter.\-c}!zs\-\_\-to\-\_\-csv@{zs\-\_\-to\-\_\-csv}}
+\index{zs\-\_\-to\-\_\-csv@{zs\-\_\-to\-\_\-csv}!particle_filter.c@{particle\-\_\-filter.\-c}}
+\subsubsection[{zs\-\_\-to\-\_\-csv}]{\setlength{\rightskip}{0pt plus 5cm}void zs\-\_\-to\-\_\-csv (
+\begin{DoxyParamCaption}
+\item[{struct {\bf measurement}}]{zs\mbox{[}\-M\mbox{]}, }
+\item[{char}]{filename\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{particle__filter_8c_a6b8086632f9adb0515910a2ade370e86}
