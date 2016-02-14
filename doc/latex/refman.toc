@@ -1,0 +1,53 @@
+\contentsline {chapter}{\numberline {1}Class Index}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Class List}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}Class Documentation}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}measurement Struct Reference}{5}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Member Data Documentation}{5}{subsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.1.1}x}{5}{subsubsection.3.1.1.1}
+\contentsline {subsubsection}{\numberline {3.1.1.2}y}{5}{subsubsection.3.1.1.2}
+\contentsline {section}{\numberline {3.2}particle Struct Reference}{5}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Member Data Documentation}{5}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}w}{5}{subsubsection.3.2.1.1}
+\contentsline {subsubsection}{\numberline {3.2.1.2}x}{5}{subsubsection.3.2.1.2}
+\contentsline {subsubsection}{\numberline {3.2.1.3}y}{6}{subsubsection.3.2.1.3}
+\contentsline {chapter}{\numberline {4}File Documentation}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}src/gauss\discretionary {-}{}{}\_\discretionary {-}{}{}sample.c File Reference}{7}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Function Documentation}{7}{subsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.1.1}box\discretionary {-}{}{}\_\discretionary {-}{}{}muller}{7}{subsubsection.4.1.1.1}
+\contentsline {subsubsection}{\numberline {4.1.1.2}main}{7}{subsubsection.4.1.1.2}
+\contentsline {section}{\numberline {4.2}src/particle\discretionary {-}{}{}\_\discretionary {-}{}{}filter.c File Reference}{7}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Macro Definition Documentation}{8}{subsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.1.1}P\discretionary {-}{}{}I}{8}{subsubsection.4.2.1.1}
+\contentsline {subsection}{\numberline {4.2.2}Function Documentation}{8}{subsection.4.2.2}
+\contentsline {subsubsection}{\numberline {4.2.2.1}create\discretionary {-}{}{}\_\discretionary {-}{}{}fake\discretionary {-}{}{}\_\discretionary {-}{}{}measurements}{8}{subsubsection.4.2.2.1}
+\contentsline {subsubsection}{\numberline {4.2.2.2}init\discretionary {-}{}{}\_\discretionary {-}{}{}particles}{8}{subsubsection.4.2.2.2}
+\contentsline {subsubsection}{\numberline {4.2.2.3}main}{8}{subsubsection.4.2.2.3}
+\contentsline {subsubsection}{\numberline {4.2.2.4}max}{8}{subsubsection.4.2.2.4}
+\contentsline {subsubsection}{\numberline {4.2.2.5}normpdf}{8}{subsubsection.4.2.2.5}
+\contentsline {subsubsection}{\numberline {4.2.2.6}particle\discretionary {-}{}{}\_\discretionary {-}{}{}filter}{8}{subsubsection.4.2.2.6}
+\contentsline {subsubsection}{\numberline {4.2.2.7}resampling\discretionary {-}{}{}\_\discretionary {-}{}{}wheel}{8}{subsubsection.4.2.2.7}
+\contentsline {subsubsection}{\numberline {4.2.2.8}weighted\discretionary {-}{}{}\_\discretionary {-}{}{}average}{8}{subsubsection.4.2.2.8}
+\contentsline {subsubsection}{\numberline {4.2.2.9}weighted\discretionary {-}{}{}\_\discretionary {-}{}{}sample}{8}{subsubsection.4.2.2.9}
+\contentsline {subsubsection}{\numberline {4.2.2.10}zs\discretionary {-}{}{}\_\discretionary {-}{}{}to\discretionary {-}{}{}\_\discretionary {-}{}{}csv}{8}{subsubsection.4.2.2.10}
+\contentsline {section}{\numberline {4.3}src/particle\discretionary {-}{}{}\_\discretionary {-}{}{}filter.h File Reference}{8}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Macro Definition Documentation}{9}{subsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.1.1}M}{9}{subsubsection.4.3.1.1}
+\contentsline {subsubsection}{\numberline {4.3.1.2}max\discretionary {-}{}{}\_\discretionary {-}{}{}x}{9}{subsubsection.4.3.1.2}
+\contentsline {subsubsection}{\numberline {4.3.1.3}max\discretionary {-}{}{}\_\discretionary {-}{}{}y}{9}{subsubsection.4.3.1.3}
+\contentsline {subsubsection}{\numberline {4.3.1.4}N}{9}{subsubsection.4.3.1.4}
+\contentsline {subsection}{\numberline {4.3.2}Function Documentation}{9}{subsection.4.3.2}
+\contentsline {subsubsection}{\numberline {4.3.2.1}init\discretionary {-}{}{}\_\discretionary {-}{}{}particles}{9}{subsubsection.4.3.2.1}
+\contentsline {subsubsection}{\numberline {4.3.2.2}normpdf}{9}{subsubsection.4.3.2.2}
+\contentsline {subsubsection}{\numberline {4.3.2.3}particle\discretionary {-}{}{}\_\discretionary {-}{}{}filter}{9}{subsubsection.4.3.2.3}
+\contentsline {section}{\numberline {4.4}src/random\discretionary {-}{}{}\_\discretionary {-}{}{}number\discretionary {-}{}{}\_\discretionary {-}{}{}gen.c File Reference}{9}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Function Documentation}{10}{subsection.4.4.1}
+\contentsline {subsubsection}{\numberline {4.4.1.1}init}{10}{subsubsection.4.4.1.1}
+\contentsline {subsubsection}{\numberline {4.4.1.2}randn}{10}{subsubsection.4.4.1.2}
+\contentsline {subsubsection}{\numberline {4.4.1.3}randu}{10}{subsubsection.4.4.1.3}
+\contentsline {section}{\numberline {4.5}src/random\discretionary {-}{}{}\_\discretionary {-}{}{}number\discretionary {-}{}{}\_\discretionary {-}{}{}gen.h File Reference}{10}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Function Documentation}{10}{subsection.4.5.1}
+\contentsline {subsubsection}{\numberline {4.5.1.1}randn}{10}{subsubsection.4.5.1.1}
+\contentsline {subsubsection}{\numberline {4.5.1.2}randu}{10}{subsubsection.4.5.1.2}
+\contentsline {chapter}{Index}{11}{section*.12}
