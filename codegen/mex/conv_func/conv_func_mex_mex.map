@@ -1,0 +1,11 @@
+MEX {
+	global:
+		mexFunction;
+		emlrtMexFcnProperties;
+		conv_func;
+		conv_func_initialize;
+		conv_func_terminate;
+		conv_func_atexit;
+	local:
+		*;
+};
