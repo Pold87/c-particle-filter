@@ -164,10 +164,16 @@ void create_fake_measurements(struct measurement zs[M]) {
   double noise_y = 50;
 
 
+/*   for (i = 0; i < M; i++) { */
+/*      zs[i].x = (double) 5*i + randn(0, noise_x); */
+/*      zs[i].y = (double) 5*i + randn(0, noise_y); */
+/* } */
+
   for (i = 0; i < M; i++) {
-     zs[i].x = (double) 5*i + randn(0, noise_x);
-     zs[i].y = (double) 5*i + randn(0, noise_y);
+    zs[i].x = (double) ((i * 200) % 400) + randn(0, noise_x);
+    zs[i].y = (double) ((i * 200) % 400)+ randn(0, noise_y);
 }
+
 
 }
 
@@ -241,7 +247,7 @@ int main(int argc, char *argv[])
     }
     printf("measurement (z) - x: %f , y: %f\n", measurements[i].x, measurements[i].y);
     fprintf(gnuplot, "%f %f 4 2\n", measurements[i].x, measurements[i].y);
-    fprintf(gnuplot, "%f %f 4 1\n", (double) 5 * i, (double) 5 * i);
+    fprintf(gnuplot, "%d %d 4 1\n",  ((int) 200 * i) % ((int) 400), ((int) 200 * i) % ((int) 400));
     fprintf(gnuplot, "%f %f 4 3\n", p.x, p.y); /* The best prediction (weighted average) */
     fprintf(gnuplot, "e\n");
     fflush(gnuplot);
