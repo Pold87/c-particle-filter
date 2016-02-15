@@ -1,5 +1,5 @@
 # Particle Filter in C
-A particle filter for x, y coordinates without control input. The main file is src/particle_filter.c. The visualization is done on-the-fly with gnuplot. The particle filter uses the following parameters:
+A particle filter for x, y coordinates without control input. The main file is `src/particle_filter.c`. Compile with `make` in folder `src/` and run with `make run`. The visualization is done on-the-fly with gnuplot. The particle filter uses the following parameters:
 
 
 - Prior: P(X<sub>0</sub>) ~ N(0, mu=Inf) (uniformly distributed)
