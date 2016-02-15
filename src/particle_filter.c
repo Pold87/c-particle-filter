@@ -209,7 +209,7 @@ struct particle weighted_average(struct particle ps[], int size) {
 int main(int argc, char *argv[])
 {
 
-  printf("Red: Measurement (output from treXton)\nGreen: Ground truth\nBlue: Particles(size represents their weight)\nYellow: Best estimate from particle filter (weighted average)");
+  printf("Red: Measurement (output from treXton)\nGreen: Ground truth\nBlue: Particles (size represents their weight)\nYellow: Best estimate from particle filter (weighted average)");
   
   /* Create and initilize particles */
   struct particle particles[N];
