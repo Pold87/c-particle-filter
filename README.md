@@ -7,7 +7,7 @@ A particle filter for x, y coordinates without control input. The main file is s
   the process noise only (currently set to sigma<sup>2</sup> = 1600)
 - Sensor Model: p(z<sub>t</sub> | X<sub>t</sub>) ~ N(mu=X<sub>t</sub>, sigma<sup>2</sup>), sigma<sup>2</sup><sub>x</sub>= 21566, sigma<sup>2</sup><sub>y</sub>= 60369
 
-![Particle filter visualization](https://github.com/Pold87/c-particle-filter/tree/master/particle_filter.png)
+![Particle filter visualization](https://raw.githubusercontent.com/Pold87/c-particle-filter/master/particle_filter.png)
 
 - Red: Measurement (output from treXton)
 - Green: Ground truth
