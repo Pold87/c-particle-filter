@@ -115,23 +115,26 @@ void particle_filter(struct particle xs[N], struct measurement *z) {
   //printf("x is: %f y is: %f\n", z->x, z->y);
   double w[N]; /* The weights of particles */
 
-  double process_noise = 10;
-  double measurement_noise = 50;
+  double process_noise_x = 40;
+  double process_noise_y = 40;
+
+  double measurement_noise_x = 147;
+  double measurement_noise_y = 245;
 
 /* Obtaining new belief state (iterate over all particles) */
   int i = 0;
   for (i = 0; i < N; i++) {
     /* Process noise incorporates the movement of the UAV */
     /* According to p(x_t | x_(t-1)) */
-    xs[i].x = randn(xs[i].x, process_noise);
-    xs[i].y = randn(xs[i].y, process_noise);
+    xs[i].x = randn(xs[i].x, process_noise_x);
+    xs[i].y = randn(xs[i].y, process_noise_y);
 
     /* Calculate weight */
     double p1, p2;
     //printf("z->x is %f xs[i].x is %f\n", z->x, xs[i].x);
-    p1 = normpdf(z->x, xs[i].x, measurement_noise);
+    p1 = normpdf(z->x, xs[i].x, measurement_noise_x);
     //printf("p1 is %f\n", w[i]);
-    p2 = normpdf(z->y, xs[i].y, measurement_noise);
+    p2 = normpdf(z->y, xs[i].y, measurement_noise_y);
     //printf("p2 is %f\n", w[i]);
     w[i] = p1 * p2;
     xs[i].w = w[i]; /* Set weight of particle */
@@ -206,6 +209,8 @@ struct particle weighted_average(struct particle ps[], int size) {
 int main(int argc, char *argv[])
 {
 
+  printf("Red: Measurement (output from treXton)\nGreen: Ground truth\nBlue: Particles(size represents their weight)\nYellow: Best estimate from particle filter (weighted average)");
+  
   /* Create and initilize particles */
   struct particle particles[N];
   init_particles(particles);
