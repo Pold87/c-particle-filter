@@ -6,6 +6,7 @@ int main(int argc, char *argv[]) {
 
   /* Settings */
   int use_smoothing = 0;
+  int use_flow = 0;
   int use_multiple_predictions = 0;
   int use_variance = 0;
 
@@ -21,18 +22,21 @@ int main(int argc, char *argv[]) {
   struct measurement measurements_2[SIZE_SIFT]; /* If multiply regressors are used */
   struct measurement measurements_3[SIZE_SIFT]; /* If multiply regressors are used */
 
+  struct measurement opticalflow[SIZE_SIFT];
+
   char *filename_out;
 
   /* For test set */
   if (strcmp(argv[1], "test") == 0) {   
-    filename_out = "sift_filtered_test_sparse.csv";
-    char filename_in[] = "/home/pold/Documents/Internship/datasets/board_test_pos.csv";
+    filename_out = "sift_filtered_test_2.csv";
+    //char filename_in[] = "/home/pold/Documents/Internship/datasets/board_test_pos.csv";
+    char filename_in[] = "/home/pold/Documents/Internship/datasets/board_test_2_pos.csv";
     read_measurements_from_csv(measurements, filename_in, SIZE_SIFT);
   }
 
   /* For training set */
   else if (strcmp(argv[1], "train") == 0) {
-    filename_out = "sift_filtered_train_sparse.csv";
+    filename_out = "sift_filtered_train_vel.csv";
     char filename_in[] = "/home/pold/Documents/Internship/datasets/board_train_pos.csv";
     read_measurements_from_csv(measurements, filename_in, SIZE_SIFT);
   }
@@ -40,11 +44,14 @@ int main(int argc, char *argv[]) {
   /* For predictions */
   else if (strcmp(argv[1], "preds") == 0) {
     filename_out = "predictions_filtered_lasso.csv";
-    char filename_in[] = "/home/pold/Documents/Internship/treXton/prediction_rf500.csv";
-    /* char filename_in_2[] = "/home/pold/Documents/Internship/treXton/prediction_rf500.csv"; */
+    char filename_in[] = "/home/pold/Documents/Internship/treXton/predictions.csv";
+    char filename_in_2[] = "/home/pold/Documents/Internship/treXton/predictions.csv";
+
+    char filename_optical_flow[] = "/home/pold/Documents/Internship/treXton/opticalflow_diff.csv";
     //char filename_in_3[] = "/home/pold/Documents/Internship/treXton/predictions_3.csv";
     read_predictions_from_csv(measurements, filename_in, SIZE_SIFT, 1);
-    /* read_predictions_from_csv(measurements_2, filename_in_2, SIZE_SIFT, 1); */
+    read_predictions_from_csv(measurements_2, filename_in_2, SIZE_SIFT, 0);
+    read_predictions_from_csv(opticalflow, filename_optical_flow, SIZE_SIFT, 0);
     /* read_predictions_from_csv(measurements_3, filename_in_3, SIZE_SIFT); */
   } else {
     printf("No argument specified");
@@ -75,16 +82,16 @@ int main(int argc, char *argv[]) {
 
     /* Use predictions form multiple regressors */ 
     if (use_multiple_predictions) {
-      particle_filter_multiple(particles, &measurements[i], &measurements_2[i]);
+      particle_filter_multiple(particles, &measurements[i], &measurements_2[i], use_variance);
     } else {
-      particle_filter(particles, &measurements[i], use_variance);
+      particle_filter(particles, &measurements[i], &opticalflow[i], use_variance, use_flow);
     }
 
 
     /* Forward-backward smoothing */
     if (use_smoothing) {
       k = SIZE_SIFT - i;
-      particle_filter(particles_backward, &measurements[k], use_variance);
+      particle_filter(particles_backward, &measurements[k], &opticalflow[i], use_variance, use_flow);
       struct particle p_backward = weighted_average(particles_backward, N);
       ps_backward[k] = p_backward;
     }

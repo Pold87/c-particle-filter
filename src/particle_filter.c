@@ -11,7 +11,10 @@ Particle filter without control input
 
 #define PI 3.14159265358979323846
 
-int informed_prior = 0;
+#define max_x 1280
+#define max_y 720
+
+int informed_prior = 1;
 int global_k = 0;
 
 void init_particles(struct particle particles[N]){
@@ -22,8 +25,8 @@ void init_particles(struct particle particles[N]){
 
     /* Initialize with informed prior */
     if (informed_prior) {
-      particles[i].x = randu(0, 100);
-      particles[i].y = randu(0, 100);
+      particles[i].x = randu(1060, 1080);
+      particles[i].y = randu(275, 285);
     }
       
     /* Initialize with random x, y-positions */
@@ -50,7 +53,7 @@ double normpdf(double x, double mu, double sigma) {
   a = (x - mu) / sigma;
   density = inv_sqrt_2pi / sigma * exp(-0.5 * a * a);
 
-  return density * 100;
+  return density;
 
 }
 
@@ -83,7 +86,24 @@ void weighted_sample(struct particle ps[], struct particle res[], double weights
   }
 }
 
-double max(double arr[], int size){
+double fmax(double a, double b) {
+
+  if (a > b)
+    return a;
+  else
+    return b;
+}
+
+double fmin(double a, double b) {
+
+  if (a < b)
+    return a;
+  else
+    return b;
+}
+
+
+double array_max(double arr[], int size){
 
   double m = -1;
   int i;
@@ -104,7 +124,7 @@ void resampling_wheel(struct particle ps[], struct particle res[], double weight
   int idx = randu(0, 1) * samples;
   /* printf("index is %d\n", idx); */
   double beta = 0.0;
-  double mw = max(weights, samples);
+  double mw = array_max(weights, samples);
   /* printf("MAX IS %f\n", mw); */
   int j;
   /* for (j = 0; j < samples; j++) { */
@@ -129,16 +149,33 @@ void resampling_wheel(struct particle ps[], struct particle res[], double weight
 }
 
 
-void particle_filter_multiple(struct particle xs[N], struct measurement *z, struct measurement *z2) {
+void particle_filter_multiple(struct particle xs[N], struct measurement *z, struct measurement *z2, int use_variance) {
 
   //printf("x is: %f y is: %f\n", z->x, z->y);
   double w[N]; /* The weights of particles */
 
-  double process_noise_x = 20;
-  double process_noise_y = 20;
+  double process_noise_x = 35;
+  double process_noise_y = 35;
 
-  double measurement_noise_x = 100;
-  double measurement_noise_y = 100;
+  double measurement_noise_x;
+  double measurement_noise_y;
+
+  double measurement_noise_2_x = 100;
+  double measurement_noise_2_y = 50;
+
+  
+  if (use_variance) {
+
+    measurement_noise_x = sqrt(z->var_x);
+    measurement_noise_y = sqrt(z->var_y);
+    printf("Measurement noise x is %f", measurement_noise_x);
+
+  } else {
+
+    measurement_noise_x = 100;
+    measurement_noise_y = 70;
+
+  }
 
   /* For SIFT */
   /* double process_noise_x = 8; */
@@ -159,19 +196,23 @@ void particle_filter_multiple(struct particle xs[N], struct measurement *z, stru
 
     /* Calculate weight */
     double p_x, p_y, p_x2, p_y2;
-    //printf("z->x is %f xs[i].x is %f\n", z->x, xs[i].x);
-    
+    //printf("z->x is %f xs[i].x is %f\n", z->x, xs[i].x);  
 
-    double weight_regressor_1 = 0.7;
-    double weight_regressor_2 = 0.3;
+    double weight_regressor_1 = 0.5;
+    double weight_regressor_2 = 0.5;
+
+    weight_regressor_1 = measurement_noise_2_x / sqrt(z->var_x);
+    /* printf("weight %f", weight_regressor_1); */
+    weight_regressor_2 = 1;
 
     if (z->x != -1) {
       p_x = normpdf(z->x, xs[i].x, measurement_noise_x);
       p_y = normpdf(z->y, xs[i].y, measurement_noise_y);
 
-      p_x2 = normpdf(z2->x, xs[i].x, measurement_noise_x);
-      p_y2 = normpdf(z2->y, xs[i].y, measurement_noise_y);
+      p_x2 = normpdf(z2->x, xs[i].x, measurement_noise_2_x);
+      p_y2 = normpdf(z2->y, xs[i].y, measurement_noise_2_y);
 
+      /* printf("weight %f", weight_regressor_2 * p_x2 * p_y2); */
       //printf("p2 is %f\n", w[i]);
       w[i] = (weight_regressor_1 * p_x * p_y) + (weight_regressor_2 * p_x2 * p_y2);
       //w[i] = p_x * p_y;
@@ -192,13 +233,13 @@ void particle_filter_multiple(struct particle xs[N], struct measurement *z, stru
 }
 
 
-void particle_filter(struct particle xs[N], struct measurement *z, int use_variance) {
+void particle_filter(struct particle xs[N], struct measurement *z, struct measurement *flow, int use_variance, int use_flow) {
 
   //printf("x is: %f y is: %f\n", z->x, z->y);
   double w[N]; /* The weights of particles */
 
-  double process_noise_x = 3;
-  double process_noise_y = 3;
+  double process_noise_x = 4;
+  double process_noise_y = 4;
 
   double measurement_noise_x;
   double measurement_noise_y;
@@ -211,8 +252,8 @@ void particle_filter(struct particle xs[N], struct measurement *z, int use_varia
 
   } else {
 
-    measurement_noise_x = 50;
-    measurement_noise_y = 50;
+    measurement_noise_x = 100;
+    measurement_noise_y = 100;
 
   }
 
@@ -228,6 +269,9 @@ void particle_filter(struct particle xs[N], struct measurement *z, int use_varia
   int i = 0;
 
   for (i = 0; i < N; i++) {
+
+    /* printf("particle x pos %f", xs[i].x); */
+    
     /* Process noise incorporates the movement of the UAV */
     /* According to p(x_t | x_(t-1)) */
 
@@ -242,27 +286,44 @@ void particle_filter(struct particle xs[N], struct measurement *z, int use_varia
     /* double updated_y = xs[i].y + xs[i].vel_y * sin(xs[i].heading); */
 
     /* Move according to velocity */
-    double updated_x = xs[i].x + xs[i].vel_x;
-    double updated_y = xs[i].y + xs[i].vel_y;
+    /* double updated_x = xs[i].x + xs[i].vel_x; */
+    /* double updated_y = xs[i].y + xs[i].vel_y; */
 
+    double updated_x;
+    double updated_y;
+    if (use_flow) {
+      updated_x = xs[i].x + flow->x;
+      updated_y = xs[i].y + flow->y;
+    } else {
+      updated_x = xs[i].x;
+      updated_y = xs[i].y;
+    }
+
+    if (z->x != -1) {
     /* Calculate current velocity */
     double vel_x = z->x - xs[i].x;
     double vel_y = z->y - xs[i].y;
 
    /* Update velocity */
-    double speed_p_x = 0.01 + normpdf(xs[i].vel_x, vel_x, 150);
-    double speed_p_y = 0.01 + normpdf(xs[i].vel_y, vel_y, 150);
+    double speed_p_x = fmin(1, 0.01 + 100 * normpdf(xs[i].vel_x, vel_x, 50));
+    double speed_p_y = fmin(1, 0.01 + 100 * normpdf(xs[i].vel_y, vel_y, 50));
 
-    printf("speed p %f", speed_p_x);
+    if (i == 0)
+      printf("p: %f\n", normpdf(xs[i].vel_y, vel_y, 50));
     
-    xs[i].vel_x = (1 - speed_p_x) * xs[i].vel_x + speed_p_x * vel_x;
-    xs[i].vel_y = (1 - speed_p_y) * xs[i].vel_y + speed_p_y * vel_y;
+    xs[i].vel_x = fmax(-25, fmin(25, (1 - speed_p_x) * xs[i].vel_x + speed_p_x * vel_x));
+    xs[i].vel_y = fmax(-25, fmin(25, (1 - speed_p_y) * xs[i].vel_y + speed_p_y * vel_y));
    
+    if (i == 0)
+      printf("vel %f", xs[i].vel_x);
+    
+    }
+
     /* Add some random process noise */
-    /* xs[i].x = randn(updated_x, process_noise_x); */
-    /* xs[i].y = randn(updated_y, process_noise_y); */
-    xs[i].x = updated_x;
-    xs[i].y = updated_y;
+    xs[i].x = randn(updated_x, process_noise_x);
+    xs[i].y = randn(updated_y, process_noise_y);
+    /* xs[i].x = updated_x; */
+    /* xs[i].y = updated_y; */
     /* xs[i].vel_x = randn(xs[i].vel_x, process_noise_x); */
     /* xs[i].vel_y = randn(xs[i].vel_y, process_noise_y); */
     
