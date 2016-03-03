@@ -28,7 +28,7 @@ void init_particles(struct particle particles[N]){
       particles[i].x = randu(1060, 1080);
       particles[i].y = randu(275, 285);
     }
-      
+
     /* Initialize with random x, y-positions */
     else {
 
@@ -163,7 +163,7 @@ void particle_filter_multiple(struct particle xs[N], struct measurement *z, stru
   double measurement_noise_2_x = 100;
   double measurement_noise_2_y = 50;
 
-  
+
   if (use_variance) {
 
     measurement_noise_x = sqrt(z->var_x);
@@ -172,8 +172,8 @@ void particle_filter_multiple(struct particle xs[N], struct measurement *z, stru
 
   } else {
 
-    measurement_noise_x = 100;
-    measurement_noise_y = 70;
+    measurement_noise_x = 10000;
+    measurement_noise_y = 10000;
 
   }
 
@@ -196,7 +196,7 @@ void particle_filter_multiple(struct particle xs[N], struct measurement *z, stru
 
     /* Calculate weight */
     double p_x, p_y, p_x2, p_y2;
-    //printf("z->x is %f xs[i].x is %f\n", z->x, xs[i].x);  
+    //printf("z->x is %f xs[i].x is %f\n", z->x, xs[i].x);
 
     double weight_regressor_1 = 0.5;
     double weight_regressor_2 = 0.5;
@@ -238,8 +238,8 @@ void particle_filter(struct particle xs[N], struct measurement *z, struct measur
   //printf("x is: %f y is: %f\n", z->x, z->y);
   double w[N]; /* The weights of particles */
 
-  double process_noise_x = 4;
-  double process_noise_y = 4;
+  double process_noise_x = 1;
+  double process_noise_y = 1;
 
   double measurement_noise_x;
   double measurement_noise_y;
@@ -271,13 +271,13 @@ void particle_filter(struct particle xs[N], struct measurement *z, struct measur
   for (i = 0; i < N; i++) {
 
     /* printf("particle x pos %f", xs[i].x); */
-    
+
     /* Process noise incorporates the movement of the UAV */
     /* According to p(x_t | x_(t-1)) */
 
     /* Calculate current heading */
     /* double heading = atan2(z->y - xs[i].y, z->x - xs[i].x); */
-    
+
     /* Update heading */
     /* xs[i].heading = 0.8 * xs[i].heading + 0.2 * heading; */
 
@@ -292,11 +292,20 @@ void particle_filter(struct particle xs[N], struct measurement *z, struct measur
     double updated_x;
     double updated_y;
     if (use_flow) {
-      updated_x = xs[i].x + flow->x;
-      updated_y = xs[i].y + flow->y;
+
+
+       /* Change heading */
+       /* TODO */
+
+       /* atan2(flow->y, flow->x) */
+
+       updated_x = xs[i].x + flow->x;
+       updated_y = xs[i].y + flow->y;
+
+
     } else {
-      updated_x = xs[i].x;
-      updated_y = xs[i].y;
+       updated_x = xs[i].x;
+       updated_y = xs[i].y;
     }
 
     if (z->x != -1) {
@@ -310,13 +319,13 @@ void particle_filter(struct particle xs[N], struct measurement *z, struct measur
 
     if (i == 0)
       printf("p: %f\n", normpdf(xs[i].vel_y, vel_y, 50));
-    
+
     xs[i].vel_x = fmax(-25, fmin(25, (1 - speed_p_x) * xs[i].vel_x + speed_p_x * vel_x));
     xs[i].vel_y = fmax(-25, fmin(25, (1 - speed_p_y) * xs[i].vel_y + speed_p_y * vel_y));
-   
+
     if (i == 0)
       printf("vel %f", xs[i].vel_x);
-    
+
     }
 
     /* Add some random process noise */
@@ -326,11 +335,11 @@ void particle_filter(struct particle xs[N], struct measurement *z, struct measur
     /* xs[i].y = updated_y; */
     /* xs[i].vel_x = randn(xs[i].vel_x, process_noise_x); */
     /* xs[i].vel_y = randn(xs[i].vel_y, process_noise_y); */
-    
+
     /* Calculate weight */
     double p_x, p_y;
     //printf("z->x is %f xs[i].x is %f\n", z->x, xs[i].x);
-    
+
     if (z->x != -1) {
 
       p_x = 0.001 + normpdf(z->x, xs[i].x, measurement_noise_x);
@@ -370,7 +379,7 @@ void read_measurements_from_csv(struct measurement zs[], char filename[], int si
 fscanf(fp, "%lf,%lf,%lf,%lf\n", &dummy_num, &zs[i].x, &zs[i].y, &zs[i].uncertainty);
   }
 
-  fclose(fp);  
+  fclose(fp);
 
 }
 
@@ -381,18 +390,18 @@ void read_predictions_from_csv(struct measurement zs[], char filename[], int siz
   FILE *fp = fopen(filename, "r");
 
   for (i = 0; i < size; i++) {
-    
+
     if (use_variance) { /* Read variance from file */
 
-      fscanf(fp, "%lf,%lf,%lf,%lf\n", &zs[i].x, &zs[i].y, 
-	     &zs[i].var_x, &zs[i].var_y);
+      fscanf(fp, "%lf,%lf,%lf,%lf\n", &zs[i].x, &zs[i].y,
+       &zs[i].var_x, &zs[i].var_y);
     }
 
-    else 
+    else
       fscanf(fp, "%lf,%lf\n", &zs[i].x, &zs[i].y);
   }
 
-  fclose(fp);  
+  fclose(fp);
 
 }
 
@@ -410,7 +419,7 @@ void read_sift_from_csv(struct sift sifts[], char filename[]) {
     fscanf(fp, "%lf,%lf,%lf,%d\n", &dummy_num, &sifts[i].x, &sifts[i].y, &sifts[i].matches);
   }
 
-  fclose(fp);  
+  fclose(fp);
 
 }
 
@@ -424,14 +433,14 @@ void create_fake_measurements(struct measurement zs[]) {
   double noise_x = 50;
   double noise_y = 50;
 
-  
+
   /* Movement delta_x = delta_y = 5 */
   for (i = 0; i < M; i++) {
      zs[i].x = (double) 5*i + randn(0, noise_x);
      zs[i].y = (double) 5*i + randn(0, noise_y);
 }
 
-  
+
   /* Bimodal measurements */
   /* for (i = 0; i < M; i++) { */
   /*   zs[i].x = (double) (100 + ((i * 200) % 400)) + randn(0, noise_x); */
@@ -492,16 +501,16 @@ struct particle weight_forward_backward(struct particle p_forward, struct partic
   p.y = combined_y;
 
   return p;
-  
+
 }
 
 struct particle calc_uncertainty(struct particle ps[], struct particle weighted_mean, int size) {
-  
+
   int i;
   double total_weight = 0;
   double x = 0;
   double y = 0;
-  
+
     for (i = 0; i < size; i++) {
     total_weight += ps[i].w;
     x += ps[i].w * pow(ps[i].x - weighted_mean.x, 2);
