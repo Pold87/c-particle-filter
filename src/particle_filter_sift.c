@@ -6,7 +6,7 @@ int main(int argc, char *argv[]) {
 
   /* Settings */
   int use_smoothing = 0;
-  int use_flow = 0;
+  int use_flow = 1;
   int use_multiple_predictions = 0;
   int use_variance = 0;
 
@@ -44,15 +44,18 @@ int main(int argc, char *argv[]) {
   /* For predictions */
   else if (strcmp(argv[1], "preds") == 0) {
     filename_out = "predictions_filtered_lasso.csv";
-    char filename_in[] = "/home/pold/Documents/Internship/treXton/predictions.csv";
-    char filename_in_2[] = "/home/pold/Documents/Internship/treXton/predictions.csv";
+    char filename_in[] = "/home/pold/Documents/treXton/predictions_cross.csv";
+    char filename_in_2[] = "/home/pold/Documents/treXton/predictions.csv";
 
-    char filename_optical_flow[] = "/home/pold/Documents/Internship/treXton/opticalflow_diff.csv";
+    char filename_optical_flow[] = "/home/pold/Documents/trexton_pprz/edgeflow_diff.csv";
     //char filename_in_3[] = "/home/pold/Documents/Internship/treXton/predictions_3.csv";
     read_predictions_from_csv(measurements, filename_in, SIZE_SIFT, 1);
     read_predictions_from_csv(measurements_2, filename_in_2, SIZE_SIFT, 0);
+
     read_predictions_from_csv(opticalflow, filename_optical_flow, SIZE_SIFT, 0);
     /* read_predictions_from_csv(measurements_3, filename_in_3, SIZE_SIFT); */
+
+
   } else {
     printf("No argument specified");
     return -1;

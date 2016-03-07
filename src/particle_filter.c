@@ -14,7 +14,7 @@ Particle filter without control input
 #define max_x 1280
 #define max_y 720
 
-int informed_prior = 1;
+int informed_prior = 0;
 int global_k = 0;
 
 void init_particles(struct particle particles[N]){
@@ -26,6 +26,7 @@ void init_particles(struct particle particles[N]){
     /* Initialize with informed prior */
     if (informed_prior) {
       particles[i].x = randu(1060, 1080);
+      printf("%f", particles[i].x);
       particles[i].y = randu(275, 285);
     }
 
@@ -172,8 +173,8 @@ void particle_filter_multiple(struct particle xs[N], struct measurement *z, stru
 
   } else {
 
-    measurement_noise_x = 10000;
-    measurement_noise_y = 10000;
+    measurement_noise_x = 100;
+    measurement_noise_y = 100;
 
   }
 
@@ -238,8 +239,8 @@ void particle_filter(struct particle xs[N], struct measurement *z, struct measur
   //printf("x is: %f y is: %f\n", z->x, z->y);
   double w[N]; /* The weights of particles */
 
-  double process_noise_x = 1;
-  double process_noise_y = 1;
+  double process_noise_x = 12;
+  double process_noise_y = 12;
 
   double measurement_noise_x;
   double measurement_noise_y;
@@ -252,8 +253,8 @@ void particle_filter(struct particle xs[N], struct measurement *z, struct measur
 
   } else {
 
-    measurement_noise_x = 100;
-    measurement_noise_y = 100;
+    measurement_noise_x = 120;
+    measurement_noise_y = 120;
 
   }
 
